@@ -1,0 +1,10 @@
+gramm-leach-bliley act (glba)
+policy background:
+date policy action
+08/01/2011 original version
+12/30/2012 minor revisions and web links added
+02/26/2014 formatting and updated links
+
+irm-4004 – data security
+university of richmond | 11
+02/26/2014 bullet #6 added to section 3

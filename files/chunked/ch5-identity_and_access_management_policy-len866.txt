@@ -1,0 +1,13 @@
+. active directory and openldap
+are two examples of directory services.
+entitlements: entitlements, also known as authorizations, privileges, or permissions, are access policies used
+to manage electronic access to data, information services, and software applications.
+they define what a given
+identity is authorized to access and what actions can be performed.
+• birthright entitlements are granted automatically either implicitly or explicitly in the account
+creation process and are often related to an individual's affiliation with the university (e.g.,
+employee, student, alumni).
+• application entitlements are requested by an individual but require approval by an application
+owner or data steward before being granted.
+identity: digital credentials and characteristics that uniquely represent a person, device, or application within
+an organization's network

@@ -1,0 +1,16 @@
+. confidential or restricted information must be encrypted at a file-level during transfer.
+a minimum
+of aes 128-bit encryption must be used, although stronger encryption levels may be appropriate.
+this can be achieved using encrypted archive (e.g., .zip) files.
+refer to the external data transfer
+policy for detailed requirements.
+4. the key to encrypted data must be transferred out of band.
+that is, it cannot be transferred using the
+same mechanism or channel as the data.
+for instance, if data are sent via e-mail, the key must be
+exchanged via phone or letter.
+5. the third-party must acknowledge receipt of the data.
+acknowledgement must be either in writing
+(e.g., email or letter), via delivery receipt (e.g., if a shipping service or u.s. mail is used), or
+auditable log entry for file sharing / transfer services.
+6

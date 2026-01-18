@@ -1,0 +1,7 @@
+action or processing, recommending changes, or denying it.
+approver
+an approver is an employee who, as part of their role, has responsibility to review and authorize business
+transactions.
+delegation
+delegation is the assignment of an individual's authority for completing or approving business transactions to
+another university employee

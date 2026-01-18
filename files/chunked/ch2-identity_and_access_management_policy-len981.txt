@@ -1,0 +1,29 @@
+. index:
+irm-4009.1 .......definitions
+irm-4009.2 .......policy statement
+irm-4009.3 .......roles and responsibilities
+policy statement:
+irm-4009.1 – definitions
+policy #: irm-4009
+policy title: identity and access management policy
+effective: 10/10/2025 responsible office: information services
+date
+approved:
+10/10/2025 approval: vice president for information services and
+chief information officer
+replaces
+policy dated:
+n/a
+responsible
+university official:
+vice president for information services and
+chief information officer
+
+irm-4009 – identity and access management policy
+university of richmond | 2
+access: access is the ability to utilize various university electronic systems, services, and resources.
+this
+includes accessing cloud- and campus-hosted data and applications, data networks, computing devices, and
+others.
+application: software designed to address various needs, ranging from simple utilities and productivity tools
+to complex enterprise system solutions.

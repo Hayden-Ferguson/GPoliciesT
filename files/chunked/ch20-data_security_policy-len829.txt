@@ -1,0 +1,13 @@
+. transmission of electronic confidential or restricted information to third parties.
+this section covers
+the transmission of administrative data or education records (other than public information) to
+external vendors, consortiums, companies or individuals on a one-time basis.
+data transfers that occur on
+an ongoing basis must be developed or reviewed by information services.
+for those cases, contact the
+director of systems & networks or the director of information security for direction and approval.
+1. the appropriate data steward must approve, in advance, any transfer of confidential or restricted
+data to a third party. 2. any staff or faculty member seeking to transfer confidential or restricted data must comply with
+this policy.
+information services will assist with identifying and securing required approvals.
+3

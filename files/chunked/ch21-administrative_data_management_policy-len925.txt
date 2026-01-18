@@ -1,0 +1,22 @@
+. policy contacts:
+vice president for information services and chief information officer
+
+exhibit 1
+university of richmond administrative data stewards
+november 11, 2024
+data stewardship domains and their respective data trustees and data stewards:
+1) finance data
+a. data trustee: executive vice president and chief operating officer (dave
+hale)
+b. data steward(s): senior associate vp & university controller (laurie
+melville), assistant controller (steve walker*)
+c. data stewardship domains: budget data, accounting data, grants,
+investment data (spider mgt), procurement and accounts payable data,
+student accounts (bursar) data, payroll and tax data
+2) hr & student employment data
+a. data trustee: executive vice president and chief operating officer (dave
+hale)
+b. data steward(s): chief human resources officer (geraldine sullivan),
+director hr operations (jillian zemp*), tas, student employment (caitie
+hoeckele)
+c

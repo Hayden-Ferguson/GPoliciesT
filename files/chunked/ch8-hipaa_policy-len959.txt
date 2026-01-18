@@ -1,0 +1,11 @@
+. protected health information (phi).
+individually identifiable information, including genetic information,
+that (i) relates to either the past, present or future physical or mental health or condition of an individual,
+the provision of health care to an individual, or the past, present or future payment for health care
+provided to an individual; and (ii) is transmitted by or maintained in electronic media or any other form or
+medium.
+phi does not include individually identified health information: (i) in education records covered
+by the family educational rights and privacy act (ferpa); (ii) relating to a university student which are
+made or maintained by a physician, psychiatrist, psychologist, or other recognized professional or
+paraprofessional acting in their professional or paraprofessional capacity, or assisting in that capacity, and
+which are made, maintained, or used only in connection with the provision of treatment to the student, and

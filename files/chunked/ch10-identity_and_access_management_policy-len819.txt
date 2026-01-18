@@ -1,0 +1,16 @@
+. accounts
+a. user accounts: when supported by the system or application, all user accounts should be
+created centrally in the directory services repositories hosted by information services.
+if the
+system or application does not support central authentication, then accounts may be created
+locally, in which case the creation, deletion, and maintenance of local accounts is the sole
+responsibility of the appropriate application owner(s).
+b. service accounts: these accounts should be created sparingly and documented.
+their use must
+be reviewed annually.
+the password requirements for service accounts must be no less
+stringent than those for user accounts. service accounts may not be used by individuals to
+authenticate.
+after initial testing, service accounts must be configured to be non-interactive if
+possible.
+c

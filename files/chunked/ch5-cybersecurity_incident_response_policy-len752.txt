@@ -1,0 +1,11 @@
+procedures and guidelines for incident response handling at the university.
+irm-4002.3 –record retention
+incident documentation and evidence will be maintained for five (5) years after the issuance of the final
+incident report.
+if the incident pertains to data or systems that fall under a regulatory retention period that
+exceeds five (5) years, the regulatory retention period will take precedence.
+irm-4002.4.
+– reporting a cybersecurity incident
+all members of the university shall immediately report any suspected cybersecurity incident to the university
+of richmond information security department using either the "report cybersecurity incident" form located
+on spidertechnet, email, phone, in-person, or by initiating a help desk support ticket

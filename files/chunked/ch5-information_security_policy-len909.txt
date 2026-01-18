@@ -1,0 +1,11 @@
+transmitted by the university and its affiliates.
+information security standard – specifies requirements for compliance with university information
+security and technology policies, other university policies, as well as applicable laws and regulations.
+standards may include business principles, best practices, technical standards, migration and
+implementation strategies, that direct the design, deployment, and management of information resources.
+national institute of standards and technology special publication 800-53 revision 5 (nist sp800-
+53r5) – provides a catalog of security and privacy controls for information systems and organizations that
+process sensitive data.
+it is a risk management framework that is widely used to establish and manage
+security programs and information technology risks.
+payment card industry data security standard (pci dss) - a comprehensive set of payment application

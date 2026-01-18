@@ -1,0 +1,6 @@
+. any administrative data or education records used in a generative ai application must be approved by
+the data steward and reassessed annually.
+e. output from a genai application must be reviewed by the data steward for confidentiality, integrity,
+accuracy, fairness, regulatory compliance, and academic attribution before publication or ingestion into
+another university system.
+f

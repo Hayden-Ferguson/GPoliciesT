@@ -1,0 +1,12 @@
+. compliance responsibilities: business associates must agree to report any use or disclosure of phi not
+permitted by the business associate agreement and any successful security incident to university within
+a commercially reasonable period, but in no event later than within fifteen (15) business days, after it is
+discovered or should have reasonably been discovered.
+4. enforcement and sanctioning of business associates: any business associate found to have violated
+the business associate agreement shall be subject to penalties, up to and including termination of the
+agreement.
+in the case where inappropriate access or use of protected health information was or may
+have been involved, the business associate may additionally be reported ot the appropriate law
+enforcement agencies.
+hrm-1005.9 – enforcement and sanctioning of employees
+a

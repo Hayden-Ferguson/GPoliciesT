@@ -1,0 +1,3 @@
+separate education collection.
+the education collection contains those objects deemed not suitable for the
+permanent collection but that may nonetheless have utility for educational programs or related activities

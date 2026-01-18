@@ -1,0 +1,14 @@
+require the observation of email content.
+observing only email system logs or email headers will not require
+an entry in this record.
+entries shall include the email account id, the date, the is staff member's name, and a
+brief explanation.
+preservation of email – users of the university's electronic mail system should be aware that, even though
+the sender and recipient have discarded their copies of a particular email, back-up copies of discarded email
+exist for a while, and can be retrieved if necessary.
+systems are routinely "backed up" to protect system
+reliability and integrity as well as to prevent potential loss of data.
+the back-up process results in the copying
+of data onto storage media that may be retained for periods of time and in locations unknown to the originator
+or recipient of the email.
+no guarantee of confidentiality – information services staff follow sound professional practices in

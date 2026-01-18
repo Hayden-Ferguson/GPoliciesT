@@ -1,0 +1,24 @@
+policy statement:
+fin-15002.1 – definitions
+external grant funds – funds received by the university from governmental or private sources that may be
+used only for specific purposes or projects identified by the entity, and usually within a specified timeframe.
+the restrictions are typically defined in a grant agreement or similar document.
+policy #: fin-15002
+policy title: effective use of institutional funds
+effective: 08/15/2022 responsible office: controller's office
+date
+approved:
+08/12/2022 approval: executive vice president and chief operating
+officer
+replaces
+policy dated:
+n/a responsible
+university officials:
+senior associate vice president and university
+controller
+
+fin-15002 – effective use of institutional funds
+university of richmond | 2
+donor restricted funds – university funds that may be used only for a specific purpose or project as agreed
+to by the university and the donor or external entity providing those funds.
+the restrictions are often

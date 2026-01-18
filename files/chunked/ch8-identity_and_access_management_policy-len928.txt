@@ -1,0 +1,13 @@
+. permissions are typically assigned to
+roles, which are then assigned to users, creating a system of access control.
+privileges: the right of an account to perform certain actions on pieces of data in an information service.
+elevated privileges are rights that exceed the privileges of a typical user of the system.
+provisioning: the creation, ongoing maintenance, and removal of computing accounts associated with an
+identity.
+the process can be automated or manual, or a mixture of both.
+service accounts: a service account is used when it is necessary for electronic systems or software
+applications to authenticate to other electronic systems or software applications without any association with a
+person.
+user accounts: a user account is a unique identity assigned to a specific person that allows that person to
+access a computer, network, or software application.
+the account may either exist in a central repository to

@@ -1,0 +1,9 @@
+. director of information security – evaluates events to determine if and when they should be categorized as an
+incident, the scope, and risk level; activates the ur-cirt; informs the vp of information services, and
+escalates incidents to the cybersecurity support team, as needed; maintains the university ir plan and
+overall security awareness program that trains users on how and when to report incidents; ensures that
+technical resources are in place or requested to identify if an incident has occurred; ensure corrective actions
+identified in incident reports are appropriately prioritized and executed.
+incident response team lead – leads incident handling efforts under direction of the director of information
+security or vice president of information services; coordinates duties among team members; records
+activities performed during an incident; responsible for ensuring incident preparation activities are completed

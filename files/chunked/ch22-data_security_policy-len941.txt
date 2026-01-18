@@ -1,0 +1,13 @@
+. mail is used), or
+auditable log entry for file sharing / transfer services.
+6. data exchange method must be verified as secure by the director of information security, the
+director of systems & networks or their designate before the transfer is attempted.
+7. data must be securely archived so that in the event of an issue the exact contents of data
+transmission can be verified.
+d. hardcopy confidential and restricted information
+1. paper or hardcopy documents, records, and media containing confidential or restricted information
+must be maintained in secure, locked locations when not in use.
+e. disposal or destruction of confidential and restricted information
+1. confidential and restricted information shall be maintained in accordance with the university's
+record retention policy. confidential and restricted information must be destroyed or deleted at
+the end of the applicable retention period in accordance with this policy. 2

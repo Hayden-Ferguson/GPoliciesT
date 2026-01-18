@@ -1,0 +1,5 @@
+note: dual authentication by approvers such as the president, vice presidents, deans, directors,
+department heads, and supervisors as well as the department's/building's access designee are required
+for card access.
+on an annual basis, one card services will require each department to conduct an audit of access
+approvals

@@ -1,0 +1,3 @@
+contract
+approvers are able to view, edit, create, and update contract information in the cms and attach related
+documentation for their department or division

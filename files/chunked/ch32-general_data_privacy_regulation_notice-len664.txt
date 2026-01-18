@@ -1,0 +1,8 @@
+. (g) if an individual has provided consent to the use of their data, they have the right to withdraw consent
+without affecting the lawfulness of richmond's use of the information prior to receipt of that request.
+individuals may exercise these rights by contacting gdpr@richmond.edu.
+richmond will ask you for
+information verifying the individual's identity, and will respond to the request within a reasonable timeframe
+irm-4006.9 – the right to file a complaint with the supervisory authority
+if an individual believes their privacy rights under the gdpr have been violated, the gdpr gives the
+individual the rights and remedies set forth in gdpr articles 77-82

@@ -1,0 +1,18 @@
+(pt)
+program
+courses
+include the course number and
+title of the courses that will
+make up the new program for
+new and existing courses.
+example: mus 390 music
+composition
+academic
+degrees &
+coursework
+list the faculty member's
+academic credentials
+(including degree, field of
+study, and institution) that
+qualify them to teach the
+courses listed in column 2

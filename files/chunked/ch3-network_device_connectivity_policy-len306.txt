@@ -1,0 +1,6 @@
+computing resources, systems, and data.
+restricted network
+university assets that do not meet the minimum network security requirements may be connected to the
+restricted network.
+the restricted network is comprised of devices that would normally pose a
+vulnerability to other users, data, and applications

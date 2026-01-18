@@ -1,0 +1,12 @@
+administrative application owner/data steward – coordinates and administers in-scope application
+resources during an incident as well as alerts director of information security and data trustee when a real or
+suspected incident has occurred within their department managed information resource.
+responsible for
+developing procedures to train their department information resource users to recognize and report incidents.
+help desk – records event information and alerts director of information security when an incident has been
+reported or occurred; may field calls from end-users regarding an incident.
+irm-4002 – cybersecurity incident response policy
+university of richmond | 4
+cybersecurity support team – a subgroup of the crisis and emergency management team who will develop
+the high-level response, coordination, and decision-making structure during an incident.
+ur-cirt – composition of the ur-cirt is defined in the ir plan and members are appointed by the vice

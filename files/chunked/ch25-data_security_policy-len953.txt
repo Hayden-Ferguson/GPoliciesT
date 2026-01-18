@@ -1,0 +1,10 @@
+. vendors
+1. university faculty and staff shall not provide vendors access to administrative data or education
+records unless a business relationship exists, access to such information is necessary for the
+vendor to provide services to the university, and that there is a contract with the vendor that
+contains appropriate confidentiality and security provisions. 2. prior to initiating a contract with a vendor or providing a vendor or other outside entity with access
+to administrative data or education records, the university faculty or staff member responsible
+for the vendor relationship must obtain the approval of the appropriate data steward. 3. all faculty, staff, and students must comply with the university's contract management policy
+and delegation of contract approval and signature authority policy when initiating, negotiating
+and finalizing a contract with a vendor that will have access to administrative data or education
+records. 4

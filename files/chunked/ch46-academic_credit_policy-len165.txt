@@ -1,0 +1,4 @@
+a pass/no pass designation.
+semester hours awarded are added into semester hours required for
+graduation, but grades are not calculated in the grade point average.
+v
