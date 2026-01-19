@@ -130,45 +130,17 @@ def ingest_csv(
 
 @router.post("/upload")
 async def upload_and_ingest(
-    file: UploadFile = File(..., description="CSV file to ingest"),
+    file: UploadFile = File(..., description="Folder to ingest"),
     clear_existing: bool = Query(default=False),
     batch_size: int = Query(default=500, ge=1, le=5000),
     limit: int | None = Query(default=None, ge=1),
     settings: Settings = Depends(get_settings),
     ingest_service: IngestionService = Depends(get_ingest_service),
 ) -> dict:
-    """Upload and ingest a CSV file."""
-    # Validate extension
-    if not file.filename or not file.filename.endswith(".csv"):
-        raise HTTPException(status_code=400, detail="Only CSV files allowed")
-
-    logger.info(f"Upload ingest request: {file.filename}")
-
-    # Save to temp file
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".csv") as tmp:
-        shutil.copyfileobj(file.file, tmp)
-        tmp_path = Path(tmp.name)
-
-    try:
-        result = ingest_service.ingest_csv(
-            file_path=tmp_path,
-            batch_size=batch_size,
-            clear_existing=clear_existing,
-            limit=limit,
-        )
-        return {"success": True, "filename": file.filename, **result}
-    except ChromaError as e:
-        error_msg = str(e)
-        if "Quota exceeded" in error_msg:
-            logger.warning(f"ChromaDB quota exceeded: {e}")
-            raise HTTPException(status_code=429, detail=error_msg)
-        logger.error(f"ChromaDB error: {e}")
-        raise HTTPException(status_code=500, detail=error_msg)
-    except ValueError as e:
-        logger.error(f"Validation error: {e}")
-        raise HTTPException(status_code=400, detail=str(e))
-    finally:
-        tmp_path.unlink(missing_ok=True)  # Cleanup temp file
+    """Upload and ingest a txt file."""
+    contents = file.read()
+    text = contents.decode("utf-8")
+    ingest_service.ingest_text(contents)
 
 
 @router.get("/stats")

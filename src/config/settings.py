@@ -12,7 +12,7 @@ CONFIG_DIR = Path(__file__).parent
 # PROJECT_ROOT: where data/ directory lives
 # Docker: /app/data (mounted), so PROJECT_ROOT = /app
 # Local: ./data (sibling to app/), so PROJECT_ROOT = app/ parent
-PROJECT_ROOT = APP_ROOT if str(APP_ROOT) == "/app" else APP_ROOT#.parent
+PROJECT_ROOT = APP_ROOT if str(APP_ROOT) == "/GPoliciesT" else APP_ROOT.parent
 
 class ChromaClientType(str, Enum):
     """ChromaDB client type."""
@@ -53,7 +53,7 @@ class Settings(BaseSettings):
     
     # ChromaDB
     chroma_client_type: ChromaClientType = ChromaClientType.PERSISTENT
-    chroma_persist_path: Path = Path("./chroma_data")  # For persistent client
+    chroma_persist_path: Path = Path("./my_chroma_db")  # For persistent client
     chroma_host: str = "localhost"              # For HTTP client
     chroma_port: int = 8000                     # For HTTP client
     chroma_tenant_id: str | None = None

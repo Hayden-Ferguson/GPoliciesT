@@ -60,17 +60,17 @@ class AgentService:
             logger.info(f"Tool called! {query} {k}")
             docs = self.vector_store.query(query_text=query, n_results=self.k)
             return "\n\n".join(
-                f"[Source: {doc['source']}]\n{doc['text']}"
+                f"[Source: {doc['metadata']['source']}]\n{doc['text']}"
                 for doc in docs
             )
         
         logger.info(f"Built tool: {university_policy_search}")
 
-        cm = PostgresSaver.from_conn_string(DB_URI)
-        checkpointer = cm.__enter__()   
-        checkpointer = PostgresSaver(DB_URI)
+        #cm = PostgresSaver.from_conn_string(DB_URI)
+        #checkpointer = cm.__enter__()   
+        #checkpointer = PostgresSaver(DB_URI)
 
-        self._checkpointer_cm = cm
+        #self._checkpointer_cm = cm
 
         #checkpointer.setup()  
 

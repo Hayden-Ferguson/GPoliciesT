@@ -40,6 +40,7 @@ class VectorStore:
             chroma_tenant_id: ChromaDB cloud tenant ID.
             chroma_database: ChromaDB cloud database name.
         """
+        logger.info("Initializing ChromaDB")
         self.client = self._create_client(client_type, persist_path, host, port, chroma_cloud_api_key, chroma_tenant_id, chroma_database)
         self.collection = self.client.get_or_create_collection(
             name=collection_name,
@@ -64,6 +65,7 @@ class VectorStore:
             if not persist_path:
                 raise ValueError("persist_path required for persistent client")
             persist_path.mkdir(parents=True, exist_ok=True)
+            logger.info(f"Creating persistent client at {persist_path}")
             return chromadb.PersistentClient(
                 path=str(persist_path),
                 settings=ChromaSettings(anonymized_telemetry=False),
@@ -71,6 +73,7 @@ class VectorStore:
         elif client_type == ChromaClientType.HTTP:
             if not host or not port:
                 raise ValueError("host and port required for HTTP client")
+            logger.info(f"Creating Http client at {host} {port}")
             return chromadb.HttpClient(
                 host=host,
                 port=port,
@@ -136,7 +139,7 @@ class VectorStore:
         self,
         query_text: str,
         n_results: int = 5,
-        threshold: float = 0.8,  # TODO:Subject to change, normal default is 0.7
+        threshold: float = 1.5,  # TODO:Subject to change, normal default is 0.7
         where: dict[str, Any] | None = None,
     ) -> list[dict[str, Any]]:
         """Query the collection with distance threshold filtering.

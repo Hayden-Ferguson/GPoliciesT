@@ -7,6 +7,8 @@ import pandas as pd
 
 from src.services.vector_store import VectorStore
 from src.config.logging import get_logger
+import uuid
+import os
 
 logger = get_logger(__name__)
 
@@ -106,16 +108,16 @@ class IngestionService:
 
         return total
 
-    '''def ingest_csv(
+    def chunk(
         self,
-        file_path: Path,
+        dir: Path,
         text_column: str = "enriched_text",
         id_column: str = "review_id",
         batch_size: int = 500,
         clear_existing: bool = False,
         limit: int | None = None,
     ) -> dict[str, Any]:
-        """Ingest a preprocessed CSV file.
+        """Ingest a preprocessed txt file.
 
         Args:
             file_path: Path to a preprocessed CSV file.
@@ -128,81 +130,85 @@ class IngestionService:
             Dict with ingestion stats.
         """
 
-        if not file_path.exists():
-            raise FileNotFoundError(f"CSV not found: {file_path}")
+        
+        CHUNKED_DIR = os.path.join(dir, "chunked")
 
-        logger.info(f"Loading CSV: {file_path}")
-        df = pd.read_csv(file_path)
-        logger.info(f"Loaded {len(df):,} rows")
-
-        # Validate required columns
-        required = [
-            text_column,
-            id_column,
-            "app_name",
-            "category",
-            "rating",
-            "review_date",
-            "helpful_count",
-        ]
-        missing = [col for col in required if col not in df.columns]
-        if missing:
-            raise ValueError(f"Missing columns: {missing}")
-
-        # Drop rows with missing text
-        df = df.dropna(subset=[text_column])
-        logger.info(f"After dropna: {len(df):,} rows")
-
-        # Apply limit if specified
-        if limit is not None:
-            df = df.head(limit)
-            logger.info(f"Limited to: {len(df):,} rows")
-
-        # whether we want to clear the existing collection or not
-        if clear_existing:
-            self.vector_store.clear()
+        chunked_files = [f for f in os.listdir(CHUNKED_DIR) if f.endswith('.txt')]
 
         documents = []
-        ids = []
         metadatas = []
+        ids = []
 
-        for _, row in df.iterrows():
-            # Extract review text after header
-            enriched_review = row[text_column]
-            review = enriched_review.split("USER REVIEW: ")[-1]
+        print(f"Chunking {len(chunked_files)} files.")
 
-            review_id = int(row[id_column])
-            doc_id = f"com.{row['app_name']}_{review_id}"
+        for file_name in chunked_files:
+            file_path = os.path.join(CHUNKED_DIR, file_name)
+            
+            try:
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                    
+                # Parse Metadata from Filename
+                # Format: ch{index}-{original_name}-{len}.txt
+                # Example: ch1-academic_policy-len495.txt
+                try:
+                    name_no_ext = os.path.splitext(file_name)[0]
+                    parts = name_no_ext.split('-')
+                    
+                    # 1. Chunk Part (first item, e.g., 'ch1')
+                    chunk_part = int(parts[0].replace('ch', ''))
+                    
+                    # 2. Size (last item, e.g., 'len495')
+                    size = int(parts[-1].replace('len', ''))
+                    
+                    # 3. File Name (everything in between)
+                    original_filename = "-".join(parts[1:-1])
+                    
+                    meta = {
+                        "source": file_name,
+                        "file_name": original_filename,
+                        "chunk_part": chunk_part,
+                        "size": size
+                    }
+                except Exception as e:
+                    # Fallback if naming convention doesn't match
+                    print(f"⚠️ Metadata parse warning for {file_name}: {e}")
+                    meta = {"source": file_name}
 
-            metadata = {
-                "review_id": review_id,
-                "app_name": row["app_name"],
-                "category": row["category"],
-                "rating": int(row["rating"]),
-                "date": str(row["review_date"]),
-                "helpful_count": int(row["helpful_count"]),
-            }
+                # Add to lists
+                documents.append(content)
+                metadatas.append(meta)
+                ids.append(str(uuid.uuid4()))
+                
+            except Exception as e:
+                print(f"Warning: Could not read {file_name}: {e}")
 
-            documents.append(review)
-            metadatas.append(metadata)
-            ids.append(doc_id)
+        print(f"Prepared {len(documents)} documents for embedding.")
 
-        # Ingest with chunking
-        chunks_added = self.batch_ingest_texts(
-            raw_texts=documents,
-            metadatas=metadatas,
-            ids=ids,
-            batch_size=batch_size,
-        )
 
-        logger.info(f"Ingestion complete: {chunks_added} chunks from {len(df)} rows")
+        print("Upserting documents to ChromaDB Collection in batches...")
 
-        return {
-            "file": str(file_path),
-            "rows_loaded": len(df),
-            "chunks_added": chunks_added,
-            "collection_count": self.vector_store.count(),
-        }'''
+        BATCH_SIZE = 100  # Safe batch size
+        total_docs = len(documents)
+
+        try:
+            for i in range(0, total_docs, BATCH_SIZE):
+                batch_docs = documents[i : i + BATCH_SIZE]
+                batch_metas = metadatas[i : i + BATCH_SIZE]
+                batch_ids = ids[i : i + BATCH_SIZE]
+                
+                self.vector_store.add_documents(
+                    documents=batch_docs,
+                    metadatas=batch_metas,
+                    ids=batch_ids
+                )
+                print(f"   ✅ Processed batch {i} to {min(i+BATCH_SIZE, total_docs)}")
+                
+            print(f"\nSuccessfully added all {total_docs} documents to ChromaDB!")
+            print(f"Final Collection Count: {self.vector_store.count()}")
+            
+        except Exception as e:
+            print(f"Error adding to ChromaDB: {e}")
 
     def get_stats(self) -> dict[str, Any]:
         """Get current ingestion stats.
