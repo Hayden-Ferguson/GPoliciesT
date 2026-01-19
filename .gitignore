@@ -1,4 +1,2 @@
 .env
-my_chroma_db/*
-my_chroma_db/
 pgdata
