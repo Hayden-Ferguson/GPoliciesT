@@ -8,6 +8,9 @@ from src.services.ingest import IngestionService
 from src.services.llm import LLMClient
 from src.services.agent import AgentService
 from src.services.vector_store import VectorStore
+from src.config.settings import LLMProvider
+from langchain_core.language_models.chat_models import BaseChatModel
+
 
 logger = get_logger(__name__)
 
@@ -42,20 +45,48 @@ def get_ingest_service() -> IngestionService:
     )
 
 @lru_cache
-def get_llm() -> LLMClient:
-    """Provide LLM client instance."""
+def get_llm()  -> BaseChatModel:
+    """Create the underlying LangChain model."""
+
+    import boto3
+    from langchain_aws import ChatBedrock
+
     settings = get_settings()
-    return LLMClient(
-        provider=settings.llm_provider,
-        model=settings.llm_model,
-        base_url=settings.llm_base_url,
-        api_key=settings.llm_api_key,
-        temperature=settings.llm_temperature,
-        max_tokens=settings.llm_max_tokens,
-        aws_region=settings.aws_region,
-        aws_access_key_id=settings.aws_access_key_id,
-        aws_secret_access_key=settings.aws_secret_access_key,
-    )
+
+    if settings.llm_provider == LLMProvider.BEDROCK:
+        import boto3
+        from langchain_aws import ChatBedrock
+
+        if not settings.aws_access_key_id or not settings.aws_secret_access_key:
+            raise ValueError("AWS credentials are required for Bedrock provider.")
+
+        client = boto3.client(
+            "bedrock-runtime",
+            region_name=settings.aws_region or "us-west-2",
+            aws_access_key_id=settings.aws_access_key_id,
+            aws_secret_access_key=settings.aws_secret_access_key,
+        )
+        model = ChatBedrock(
+            model_id=settings.llm_model,
+            client=client,
+            model_kwargs={
+                "temperature": settings.llm_temperature,
+                "max_tokens": settings.llm_max_tokens,
+            },
+        )
+    else:
+        from langchain_openai import ChatOpenAI
+        
+        model = ChatOpenAI(
+            model=settings.llm_model,
+            api_key=settings.llm_api_key,
+            temperature=settings.llm_temperature,
+            base_url=settings.llm_base_url or None,
+            max_tokens=settings.llm_max_tokens,
+        )
+    logger.info("LLM Model created")
+
+    return model
 
 def get_agent_service() -> AgentService:
     """Provide Agent service instance."""

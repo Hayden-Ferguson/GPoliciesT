@@ -7,7 +7,8 @@ from langchain.agents import create_agent
 from langgraph.checkpoint.postgres import PostgresSaver
 
 from src.config.logging import get_logger
-from src.services.llm import LLMClient
+#from src.services.llm import LLMClient
+from langchain_core.language_models.chat_models import BaseChatModel
 #if TYPE_CHECKING:
 from src.services.vector_store import VectorStore
 
@@ -29,8 +30,9 @@ class AgentService:
 
     def __init__(
         self,
-        llm: LLMClient,
-        vector_store: "VectorStore",
+        llm: BaseChatModel,
+        vector_store: VectorStore,
+        k: int = 4,
         DB_URI: str = "",
     ):
         """Initialize RAG service.
@@ -42,38 +44,46 @@ class AgentService:
             threshold: Distance threshold for filtering.
         """
 
+        self.vector_store = vector_store
+        self.k = k
+
         @tool
         def university_policy_search(
-            query: str,
-            k: Optional[int] = 4
-        ) -> list[dict]:
+            query: str
+        ) -> str:
             """
             Search a database for university policies.
 
             Args:
             query: semantic search query
-            k: max number of documents to retrieve
             """
-            print(f"Tool called! {query} {k}")
-            return vector_store.query(query_text=query, k=k)
+            logger.info(f"Tool called! {query} {k}")
+            docs = self.vector_store.query(query_text=query, n_results=self.k)
+            return "\n\n".join(
+                f"[Source: {doc['source']}]\n{doc['text']}"
+                for doc in docs
+            )
+        
+        logger.info(f"Built tool: {university_policy_search}")
 
-        tools = [university_policy_search]
         cm = PostgresSaver.from_conn_string(DB_URI)
         checkpointer = cm.__enter__()   
-        #checkpointer = PostgresSaver(DB_URI)
+        checkpointer = PostgresSaver(DB_URI)
 
         self._checkpointer_cm = cm
 
         #checkpointer.setup()  
 
         self.agent = create_agent(
-            model=llm.llm,
-            tools=tools,
+            model=llm,
+            tools=[university_policy_search],
             system_prompt="You are a helpful assistant for searching through Richmond "
             "University policies. Be concise.",
-            checkpointer=checkpointer,  # Memory
+            #checkpointer=checkpointer,  # Memory
             name="policy_bot"
         )
+
+        logger.info("Agent created")
 
     def query(
         self,
@@ -91,12 +101,15 @@ class AgentService:
         """
         config = {"configurable": {"thread_id": thread_id}}
 
+        logger.info("Before self.agent.invoke")
         result = self.agent.invoke(
-            {"messages": [("user", question)]},
+            {"messages": [{"role": "user", "content": question}]},
             config
         )
+        logger.info("After self.agent.invoke")
 
-        return result["messages"][-1].content
+        
+        return {"answer": result["messages"][-1].content}
 
         '''
         # Step 1: Optionally filter sources using LLM

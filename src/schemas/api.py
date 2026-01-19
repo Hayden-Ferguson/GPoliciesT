@@ -21,9 +21,8 @@ class QueryResponse(BaseModel):
     """Response from RAG query."""
 
     answer: str
-#    sources: list[str]
-#    num_docs: int
-#    selected_sources: list[str] = []
+    #sources: list[str]
+    #thread_id: str
 
 
 # --- Ingest Schemas ---

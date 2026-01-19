@@ -31,7 +31,7 @@ else:
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Initialize resources on startup and cleanup on shutdown."""
-    logger.info("Starting Sentio+ API")
+    logger.info("Starting GPoliciesT")
     logger.info(f"Chroma path: {settings.chroma_persist_path.resolve()}")
     logger.info(f"Chroma client type: {settings.chroma_client_type.value}")
     logger.info(f"Bedrock model: {settings.llm_model}")
@@ -43,7 +43,7 @@ async def lifespan(app: FastAPI):
 
     yield
 
-    logger.info("Shutting down Sentio+ API")
+    logger.info("Shutting down GPoliciesT")
 
 
 app = FastAPI(

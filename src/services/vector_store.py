@@ -157,7 +157,7 @@ class VectorStore:
             include=["documents", "metadatas", "distances"],
         )
 
-        docs = ""
+        docs = []
         if results["documents"] and results["documents"][0]:
             for text, meta, dist in zip(
                 results["documents"][0],

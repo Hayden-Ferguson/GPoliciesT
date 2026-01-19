@@ -39,6 +39,7 @@ class Settings(BaseSettings):
 
     # LLM - Universal config
     llm_provider: LLMProvider = LLMProvider.BEDROCK
+    #llm_provider: LLMProvider = LLMProvider.OPENAI
     llm_base_url: str = "" 
     llm_model: str = "anthropic.claude-3-sonnet-20240229-v1:0"
     llm_api_key: str = ""  # Local models don't need this
