@@ -19,16 +19,16 @@ def get_config() -> Settings:
     return get_settings()
 
 # Global checkpointer
-_checkpointer = None
-_checkpointer_contex = None
+checkpointer = None
+checkpointer_contex = None
 
 async def init_checkpointer():
     """Initialize checkpointer based on settings. Called during app startup."""
-    global _checkpointer, _checkpointer_contex
+    global checkpointer, checkpointer_contex
     settings = get_settings()
 
     if settings.checkpoint_type == CheckpointType.MEMORY:
-        _checkpointer = InMemorySaver()
+        checkpointer = InMemorySaver()
         logger.info("Checkpoint initialized")
     elif settings.checkpoint_type == CheckpointType.POSTGRES:
         if not settings.database_uri:
@@ -37,8 +37,8 @@ async def init_checkpointer():
             )
         from langgraph.checkpoint.postgres.aio import AsyncPostgresSaver
         
-        _checkpointer_contex = AsyncPostgresSaver.from_conn_string(settings.database_uri)
-        _checkpointer = await _checkpointer_contex.__aenter__()
+        checkpointer_contex = AsyncPostgresSaver.from_conn_string(settings.database_uri)
+        checkpointer = await checkpointer_contex.__aenter__()
         await _checkpointer.setup()
         logger.info("AsyncPostgresSaver initialized")
     else:
@@ -47,19 +47,19 @@ async def init_checkpointer():
 
 async def cleanup_checkpointer():
     """Cleanup checkpointer. Called during app shutdown."""
-    global _checkpointer, _checkpointer_contex
-    if _checkpointer_contex is not None:
-        await _checkpointer_contex.__aexit__(None, None, None)
+    global checkpointer, checkpointer_contex
+    if checkpointer_contex is not None:
+        await checkpointer_contex.__aexit__(None, None, None)
         logger.info("AsyncPostgresSaver closed")
-    _checkpointer = None
-    _checkpointer_contex = None
+    checkpointer = None
+    checkpointer_contex = None
 
 
 def get_checkpointer():
     """Get checkpointer."""
-    if _checkpointer is None:
+    if checkpointer is None:
         raise RuntimeError("Checkpointer not initialized. Call init_checkpointer() first.")
-    return _checkpointer
+    return checkpointer
 
 
 @lru_cache
