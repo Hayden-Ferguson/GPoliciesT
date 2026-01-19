@@ -3,13 +3,13 @@
 from functools import lru_cache
 
 from src.config.logging import get_logger
-from src.config.settings import Settings, get_settings
+from src.config.settings import Settings, get_settings, LLMProvider, CheckpointType
 from src.services.ingest import IngestionService
 from src.services.llm import LLMClient
 from src.services.agent import AgentService
 from src.services.vector_store import VectorStore
-from src.config.settings import LLMProvider
 from langchain_core.language_models.chat_models import BaseChatModel
+from langgraph.checkpoint.memory import InMemorySaver
 
 
 logger = get_logger(__name__)
@@ -18,7 +18,49 @@ def get_config() -> Settings:
     """Get cached settings instance for dependency injection."""
     return get_settings()
 
-# TODO: Implement actual dependencies below
+# Global checkpointer
+_checkpointer = None
+_checkpointer_contex = None
+
+async def init_checkpointer():
+    """Initialize checkpointer based on settings. Called during app startup."""
+    global _checkpointer, _checkpointer_contex
+    settings = get_settings()
+
+    if settings.checkpoint_type == CheckpointType.MEMORY:
+        _checkpointer = InMemorySaver()
+        logger.info("Checkpoint initialized")
+    elif settings.checkpoint_type == CheckpointType.POSTGRES:
+        if not settings.database_uri:
+            raise ValueError(
+                "checkpoint_postgres_url must be set when using postgres checkpoint type"
+            )
+        from langgraph.checkpoint.postgres.aio import AsyncPostgresSaver
+        
+        _checkpointer_contex = AsyncPostgresSaver.from_conn_string(settings.database_uri)
+        _checkpointer = await _checkpointer_contex.__aenter__()
+        await _checkpointer.setup()
+        logger.info("AsyncPostgresSaver initialized")
+    else:
+        raise ValueError(f"Invalid checkpoint type: {settings.checkpoint_type}")
+
+
+async def cleanup_checkpointer():
+    """Cleanup checkpointer. Called during app shutdown."""
+    global _checkpointer, _checkpointer_contex
+    if _checkpointer_contex is not None:
+        await _checkpointer_contex.__aexit__(None, None, None)
+        logger.info("AsyncPostgresSaver closed")
+    _checkpointer = None
+    _checkpointer_contex = None
+
+
+def get_checkpointer():
+    """Get checkpointer."""
+    if _checkpointer is None:
+        raise RuntimeError("Checkpointer not initialized. Call init_checkpointer() first.")
+    return _checkpointer
+
 
 @lru_cache
 def get_vector_store() -> VectorStore:
@@ -94,5 +136,5 @@ def get_agent_service() -> AgentService:
     return AgentService(
         llm=get_llm(),
         vector_store=get_vector_store(),
-        DB_URI=settings.database_uri,
+        checkpointer=get_checkpointer(),
     )

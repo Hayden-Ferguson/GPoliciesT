@@ -7,14 +7,13 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from src.config.logging import get_logger, setup_logging
 from src.config.settings import get_settings
-from src.dependencies import get_vector_store
+from src.dependencies import get_vector_store, init_checkpointer, cleanup_checkpointer
 from src.routes import ingest_router
 from src.routes import query_router
 
 import time
 import psycopg
 
-setup_logging()
 logger = get_logger(__name__)
 settings = get_settings()
 
@@ -31,10 +30,13 @@ else:
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Initialize resources on startup and cleanup on shutdown."""
+    setup_logging()
     logger.info("Starting GPoliciesT")
     logger.info(f"Chroma path: {settings.chroma_persist_path.resolve()}")
     logger.info(f"Chroma client type: {settings.chroma_client_type.value}")
     logger.info(f"Bedrock model: {settings.llm_model}")
+
+    await init_checkpointer()
 
     # ChromaDB client
     vector_store = get_vector_store()
@@ -43,24 +45,31 @@ async def lifespan(app: FastAPI):
 
     yield
 
+    await cleanup_checkpointer()
+
     logger.info("Shutting down GPoliciesT")
 
 
-app = FastAPI(
-    title=settings.app_name,
-    description=settings.app_description,
-    version=settings.version,
-    lifespan=lifespan,
-)
+def create_app() -> FastAPI: 
+    app = FastAPI(
+        title=settings.app_name,
+        description=settings.app_description,
+        version=settings.version,
+        lifespan=lifespan,
+    )
 
 # CORS middleware for frontend access
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
+    return app
+
+app = create_app()
 
 
 @app.get("/")

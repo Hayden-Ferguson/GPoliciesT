@@ -128,7 +128,7 @@ def ingest_csv(
         raise HTTPException(status_code=400, detail=str(e))
 '''
 
-@router.post("/upload")
+'''@router.post("/upload")
 async def upload_and_ingest(
     file: UploadFile = File(..., description="Folder to ingest"),
     clear_existing: bool = Query(default=False),
@@ -140,7 +140,37 @@ async def upload_and_ingest(
     """Upload and ingest a txt file."""
     contents = file.read()
     text = contents.decode("utf-8")
-    ingest_service.ingest_text(contents)
+
+    try:
+        name_no_ext = os.path.splitext(file_name)[0]
+        parts = name_no_ext.split('-')
+        
+        # 1. Chunk Part (first item, e.g., 'ch1')
+        chunk_part = int(parts[0].replace('ch', ''))
+        
+        # 2. Size (last item, e.g., 'len495')
+        size = int(parts[-1].replace('len', ''))
+        
+        # 3. File Name (everything in between)
+        original_filename = "-".join(parts[1:-1])
+        
+        meta = {
+            "source": file_name,
+            "file_name": original_filename,
+            "chunk_part": chunk_part,
+            "size": size
+        }
+    except Exception as e:
+        # Fallback if naming convention doesn't match
+        print(f"⚠️ Metadata parse warning for {file_name}: {e}")
+        meta = {"source": file_name}
+
+    # Add to lists
+    documents.append(content)
+    metadatas.append(meta)
+    ids.append(str(uuid.uuid4()))
+
+    ingest_service.ingest_text(contents)'''
 
 
 @router.get("/stats")

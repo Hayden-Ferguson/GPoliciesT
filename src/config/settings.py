@@ -26,6 +26,11 @@ class LLMProvider(str, Enum):
     OPENAI = "openai"    # Any OpenAI-compatible API (Ollama, LM Studio, vLLM, OpenAI)
     BEDROCK = "bedrock"  # AWS Bedrock
 
+class CheckpointType(str, Enum):
+    """Checkpoint type."""
+    MEMORY = "memory"
+    POSTGRES = "postgres"
+
 class Settings(BaseSettings):
     '''Application settings'''
 
@@ -81,7 +86,8 @@ class Settings(BaseSettings):
     log_dir: Path = PROJECT_ROOT / "logs"
     logging_config_file: Path = CONFIG_DIR / "logging_conf.json"
 
-    #Database
+    #Memory/Checkpoint
+    checkpoint_type: CheckpointType = CheckpointType.MEMORY
     database_uri: str = "postgresql://postgres2:postgres2@postgres:5432/postgres2"
 
     @property

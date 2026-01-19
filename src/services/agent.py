@@ -5,14 +5,13 @@ from typing import TYPE_CHECKING, Any
 from langchain_core.prompts import PromptTemplate
 from langchain.agents import create_agent
 from langgraph.checkpoint.postgres import PostgresSaver
+from langgraph.checkpoint.base import BaseCheckpointSaver
 
 from src.config.logging import get_logger
 #from src.services.llm import LLMClient
 from langchain_core.language_models.chat_models import BaseChatModel
 #if TYPE_CHECKING:
 from src.services.vector_store import VectorStore
-
-from src.tools.policy_search import build_policy_search_tool
 
 
 from langchain.tools import tool
@@ -32,6 +31,7 @@ class AgentService:
         self,
         llm: BaseChatModel,
         vector_store: VectorStore,
+        checkpointer: BaseCheckpointSaver,
         k: int = 4,
         DB_URI: str = "",
     ):
@@ -79,7 +79,7 @@ class AgentService:
             tools=[university_policy_search],
             system_prompt="You are a helpful assistant for searching through Richmond "
             "University policies. Be concise.",
-            #checkpointer=checkpointer,  # Memory
+            checkpointer=checkpointer,  # Memory
             name="policy_bot"
         )
 
