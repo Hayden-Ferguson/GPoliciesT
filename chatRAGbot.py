@@ -56,10 +56,10 @@ try:
     chroma_client = chromadb.PersistentClient(path="./my_chroma_db")
     
     collection = chroma_client.get_or_create_collection(name=CHROMA_COLLECTION_NAME)
-    print(f"   ✅ Connected to Chromadb. Collection '{CHROMA_COLLECTION_NAME}' ready.")
-    print(f"   ℹ️ Current Collection Count: {collection.count()}")
+    print(f"   Connected to Chromadb collection: '{CHROMA_COLLECTION_NAME}'.")
+    print(f"   Current Collection Count: {collection.count()}")
 except Exception as e:
-    print(f"   ❌ Error initializing ChromaDB Cloud: {e}")
+    print(f"   Error initializing ChromaDB Cloud: {e}")
 
 SOURCE_DIR = "files"
 CHUNKED_DIR = os.path.join(SOURCE_DIR, "chunked")
@@ -67,9 +67,9 @@ CHUNKED_DIR = os.path.join(SOURCE_DIR, "chunked")
 # Create chunked directory if it doesn't exist
 if not os.path.exists(CHUNKED_DIR):
     os.makedirs(CHUNKED_DIR)
-    print(f"✅ Created directory: {CHUNKED_DIR}")
+    print(f"Created directory: {CHUNKED_DIR}")
 else:
-    print(f"ℹ️ Directory exists: {CHUNKED_DIR}")
+    print(f"Directory exists: {CHUNKED_DIR}")
 
 # List source files (excluding directory or hidden files)
 source_files = [f for f in os.listdir(SOURCE_DIR) if os.path.isfile(os.path.join(SOURCE_DIR, f)) and not f.startswith('.')]
@@ -86,7 +86,7 @@ def chunking():
     metadatas = []
     ids = []
 
-    print(f"Found {len(chunked_files)} chunk files to process.")
+    print(f"Chunking {len(chunked_files)} files.")
 
     for file_name in chunked_files:
         file_path = os.path.join(CHUNKED_DIR, file_name)
@@ -133,8 +133,6 @@ def chunking():
     print(f"Prepared {len(documents)} documents for embedding.")
 
 
-    # Step 8: Add to ChromaDB (Embed & Upsert)
-    # Batch size limit for Chroma is usually 1000 (we hit 1914!), so we must batch.
     print("Upserting documents to ChromaDB Collection in batches...")
 
     BATCH_SIZE = 100  # Safe batch size
@@ -153,11 +151,11 @@ def chunking():
             )
             print(f"   ✅ Processed batch {i} to {min(i+BATCH_SIZE, total_docs)}")
             
-        print(f"\n🎉 Successfully added all {total_docs} documents to ChromaDB!")
+        print(f"\nSuccessfully added all {total_docs} documents to ChromaDB!")
         print(f"Final Collection Count: {collection.count()}")
         
     except Exception as e:
-        print(f"❌ Error adding to ChromaDB: {e}")
+        print(f"Error adding to ChromaDB: {e}")
 
 
 
