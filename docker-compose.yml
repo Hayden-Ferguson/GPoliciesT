@@ -43,10 +43,3 @@ services:
 #       - "3000:3000"
 #     depends_on:
 #       - api
-
-  # streamlit:
-  #   build: ./streamlit-app
-  #   ports:
-  #     - "8501:8501"
-  #   depends_on:
-  #     - api

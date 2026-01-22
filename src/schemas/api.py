@@ -34,15 +34,6 @@ class QueryResponse(BaseModel):
 
 # --- Ingest Schemas ---
 
-class IngestResponse(BaseModel):
-    """Response from ingestion."""
-
-    success: bool
-    file: str
-    rows_loaded: int
-    chunks_added: int
-    collection_count: int
-
 
 class IngestStatsResponse(BaseModel):
     """Response with ingestion statistics."""

@@ -2,7 +2,6 @@
 
 from src.schemas.api import (
     HealthResponse,
-    IngestResponse,
     IngestStatsResponse,
     ModelInfoResponse,
     QueryRequest,
@@ -11,7 +10,6 @@ from src.schemas.api import (
 
 __all__ = [
     "HealthResponse",
-    "IngestResponse",
     "IngestStatsResponse",
     "ModelInfoResponse",
     "QueryRequest",
