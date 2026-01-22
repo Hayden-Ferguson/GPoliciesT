@@ -4,12 +4,11 @@ services:
     image: chromadb/chroma:latest
     ports:
       - "8001:8000"
-#    profiles:
-#      - local
+    #    profiles:
+    #      - local
     volumes:
       - ./my_chroma_db:/data
 
-      
   postgres:
     image: postgres:15
     environment:
@@ -17,7 +16,7 @@ services:
       POSTGRES_PASSWORD: postgres2
       POSTGRES_DB: postgres2
     ports:
-      - "5433:5432"  # host:container mapping
+      - "5433:5432" # host:container mapping
     volumes:
       - ./pgdata:/var/lib/postgresql/data
 
@@ -33,7 +32,16 @@ services:
     env_file:
       - ./.env
 
-      
+  my-app:
+    build: ./my-app
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./my-app:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
 #   web:
 #     build:
 #       context: ./web
