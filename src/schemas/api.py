@@ -23,6 +23,10 @@ class QueryRequest(BaseModel):
         examples=["thread_001"],
     )
 
+class ThreadResponse(BaseModel):
+    """Response from thread creation."""
+    thread_id: str
+
 
 class QueryResponse(BaseModel):
     """Response from RAG query."""

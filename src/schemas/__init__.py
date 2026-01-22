@@ -6,6 +6,7 @@ from src.schemas.api import (
     ModelInfoResponse,
     QueryRequest,
     QueryResponse,
+    ThreadResponse,
 )
 
 __all__ = [
@@ -14,4 +15,5 @@ __all__ = [
     "ModelInfoResponse",
     "QueryRequest",
     "QueryResponse",
+    "ThreadResponse",
 ]

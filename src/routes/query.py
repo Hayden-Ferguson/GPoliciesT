@@ -1,10 +1,11 @@
 """Query routes."""
 
 from fastapi import APIRouter, Depends, HTTPException
+from uuid import uuid4
 
 from src.config.logging import get_logger
 from src.dependencies import get_llm, get_agent_service
-from src.schemas.api import ModelInfoResponse, QueryRequest, QueryResponse
+from src.schemas.api import ModelInfoResponse, QueryRequest, QueryResponse, ThreadResponse
 from src.services.llm import LLMClient
 from src.services.agent import AgentService
 
@@ -30,6 +31,13 @@ def query(
     except Exception as e:
         logger.error(f"Query failed: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/threads", response_model=ThreadResponse)
+def create_thread() -> ThreadResponse:
+    """Create a new thread."""
+    thread_id = f"thread_{uuid4()}"
+    logger.debug(f"Created new thread: {thread_id}")
+    return ThreadResponse(thread_id=thread_id)
 
 '''
 @router.get("/model", response_model=ModelInfoResponse)
