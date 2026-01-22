@@ -15,6 +15,13 @@ class QueryRequest(BaseModel):
         description="Question to ask about product reviews",
         examples=["What are the policies on drugs?"],
     )
+    thread_id: str = Field(
+        ...,
+        min_length=1,
+        max_length=100,
+        description="What thread are you using?",
+        examples=["thread_001"],
+    )
 
 
 class QueryResponse(BaseModel):

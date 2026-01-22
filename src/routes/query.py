@@ -24,6 +24,7 @@ def query(
     try:
         result = agent_service.query(
             question=request.question,
+            thread_id=request.thread_id,
         )
         return QueryResponse(**result)
     except Exception as e:
