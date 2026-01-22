@@ -8,6 +8,4 @@ GPoliciesT is a Retrieval-Augmented Genrative (RAG) chatbot meant to help unders
 
 2. Run `docker compose up` in the root directory GPoliciesT
 
-3. Run `npm run dev` in GPoliciesT/my-app
-
-4. Go to the localhost procided in the previous command for the application.
+3. Open http://localhost:5173/ for the application.
